@@ -1,12 +1,9 @@
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class KingTest {
 
@@ -82,19 +79,19 @@ public class KingTest {
         }
     }
 
-    @Test(expected = IllegalPositionException.class)
-    public void testSetPositionNotOnBoard() throws IllegalPositionException {
-        new King(testChessBoard, ChessPiece.Color.WHITE).setPosition("c9");
+    @Test
+    public void testSetPositionNotOnBoard() {
+        assertThrows(IllegalPositionException.class, () -> new King(testChessBoard, ChessPiece.Color.WHITE).setPosition("c9"));
     }
 
-    @Test(expected = IllegalPositionException.class)
-    public void testSetPositionEmptyString() throws IllegalPositionException {
-        new King(testChessBoard, ChessPiece.Color.WHITE).setPosition("");
+    @Test
+    public void testSetPositionEmptyString() {
+        assertThrows(IllegalPositionException.class, () -> new King(testChessBoard, ChessPiece.Color.WHITE).setPosition(""));
     }
 
-    @Test(expected = IllegalPositionException.class)
-    public void testSetPositionMalformed() throws IllegalPositionException {
-        new King(testChessBoard, ChessPiece.Color.WHITE).setPosition("#!");
+    @Test
+    public void testSetPositionMalformed() {
+        assertThrows(IllegalPositionException.class, () -> new King(testChessBoard, ChessPiece.Color.WHITE).setPosition("#!"));
     }
 
     @Test

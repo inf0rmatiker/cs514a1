@@ -1,17 +1,10 @@
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class KnightTest {
 
     private static ChessBoard testChessBoard;
-
-    @BeforeAll
-    static void initializeTests() {
-        testChessBoard = new ChessBoard();
-    }
 
     @Test
     public void testGetColorWhite() {
@@ -79,19 +72,19 @@ public class KnightTest {
         }
     }
 
-    @Test(expected = IllegalPositionException.class)
-    public void testSetPositionNotOnBoard() throws IllegalPositionException {
-        new Knight(testChessBoard, ChessPiece.Color.WHITE).setPosition("c9");
+    @Test
+    public void testSetPositionNotOnBoard() {
+        assertThrows(IllegalPositionException.class, () -> new Knight(testChessBoard, ChessPiece.Color.WHITE).setPosition("c9"));
     }
 
-    @Test(expected = IllegalPositionException.class)
-    public void testSetPositionEmptyString() throws IllegalPositionException {
-        new Knight(testChessBoard, ChessPiece.Color.WHITE).setPosition("");
+    @Test
+    public void testSetPositionEmptyString() {
+        assertThrows(IllegalPositionException.class, () -> new Knight(testChessBoard, ChessPiece.Color.WHITE).setPosition(""));
     }
 
-    @Test(expected = IllegalPositionException.class)
-    public void testSetPositionMalformed() throws IllegalPositionException {
-        new Knight(testChessBoard, ChessPiece.Color.WHITE).setPosition("#!");
+    @Test
+    public void testSetPositionMalformed() {
+        assertThrows(IllegalPositionException.class, () -> new Knight(testChessBoard, ChessPiece.Color.WHITE).setPosition("#!"));
     }
 
     @Test

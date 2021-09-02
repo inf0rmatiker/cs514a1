@@ -1,13 +1,9 @@
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ChessBoardTest {
 
@@ -53,25 +49,24 @@ public class ChessBoardTest {
         assertFalse(cb.placePiece(new Pawn(cb, ChessPiece.Color.WHITE), ""));
     }
 
-    @Test(expected=IllegalPositionException.class)
-    public void testGetPieceIllegalChar() throws IllegalPositionException {
-        ChessBoard cb = new ChessBoard();
-        String position = "&9";
-        cb.getPiece(position);
+    @Test
+    public void testGetPieceIllegalChar() {
+        assertThrows(IllegalPositionException.class, () -> new ChessBoard().getPiece("&9"));
     }
 
-    @Test(expected=IllegalPositionException.class)
-    public void testGetPieceEmptyString() throws IllegalPositionException {
-        ChessBoard cb = new ChessBoard();
-        String position = "";
-        cb.getPiece(position);
+    @Test
+    public void testGetPieceUppercaseChar() {
+        assertThrows(IllegalPositionException.class, () -> new ChessBoard().getPiece("A6"));
     }
 
-    @Test(expected=IllegalPositionException.class)
-    public void testGetPieceOutOfBounds() throws IllegalPositionException {
-        ChessBoard cb = new ChessBoard();
-        String position = "s9";
-        cb.getPiece(position);
+    @Test
+    public void testGetPieceEmptyString() {
+        assertThrows(IllegalPositionException.class, () -> new ChessBoard().getPiece(""));
+    }
+
+    @Test
+    public void testGetPieceOutOfBounds() {
+        assertThrows(IllegalPositionException.class, () -> new ChessBoard().getPiece("s9"));
     }
 
     @Test
