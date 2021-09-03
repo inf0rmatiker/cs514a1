@@ -1,13 +1,10 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ChessBoardTest {
 
-    private static String[][] positions = new String[][] {
+    private static final String[][] positions = new String[][] {
             {"a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8"},
             {"a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"},
             {"a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6"},
@@ -29,6 +26,12 @@ public class ChessBoardTest {
         } catch (IllegalPositionException e) {
             fail("Caught IllegalPositionException");
         }
+    }
+
+    @Test
+    public void testPlaceUppercaseChar() {
+        ChessBoard cb = new ChessBoard();
+        assertFalse(cb.placePiece(new Pawn(cb, ChessPiece.Color.WHITE), "A6"));
     }
 
     @Test
@@ -113,6 +116,63 @@ public class ChessBoardTest {
                     fail("Caught IllegalPositionException");
                 }
             }
+        }
+    }
+
+    @Test
+    public void testMoveOutOfBounds() {
+        ChessBoard cb = new ChessBoard();
+        cb.initialize();
+        assertThrows(IllegalMoveException.class, () -> cb.move("e8", "e9"));
+    }
+
+    @Test
+    public void testMoveInvalidPosition() {
+        ChessBoard cb = new ChessBoard();
+        cb.initialize();
+        assertThrows(IllegalMoveException.class, () -> cb.move("e8", ""));
+    }
+
+    @Test
+    public void testMoveBlockingPiece() {
+        ChessBoard cb = new ChessBoard();
+        cb.initialize();
+        assertThrows(IllegalMoveException.class, () -> cb.move("e8", "e7"));
+    }
+
+    @Test
+    public void testMovePawnValidOneSpaceForward() {
+        ChessBoard cb = new ChessBoard();
+        cb.initialize();
+        assertDoesNotThrow(() -> cb.move("e7", "e6"));
+        try {
+            assertNotNull(cb.getPiece("e6"));
+        } catch (IllegalPositionException e) {
+            fail("Caught IllegalPositionException!");
+        }
+    }
+
+    @Test
+    public void testMovePawnValidTwoSpacesForward() {
+        ChessBoard cb = new ChessBoard();
+        cb.initialize();
+        assertDoesNotThrow(() -> cb.move("e7", "e5"));
+        try {
+            assertNotNull(cb.getPiece("e5"));
+        } catch (IllegalPositionException e) {
+            fail("Caught IllegalPositionException!");
+        }
+    }
+
+    @Test
+    public void testMovePawnInvalidThreeSpacesForward() {
+        ChessBoard cb = new ChessBoard();
+        cb.initialize();
+        assertThrows(IllegalMoveException.class, () -> cb.move("e7", "e4"));
+        try {
+            assertNull(cb.getPiece("e4"));
+        } catch (IllegalPositionException e) {
+            fail("Caught IllegalPositionException!");
         }
     }
 }

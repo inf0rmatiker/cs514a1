@@ -46,7 +46,7 @@ public abstract class ChessPiece {
         reasons mentioned earlier, throw the stated exception.
      */
     public void setPosition(String position) throws IllegalPositionException {
-        if (isValidPosition(position)) {
+        if (isOnBoard(position)) {
             this.row = getRow(position);
             this.column = getCol(position);
         } else {
@@ -89,18 +89,18 @@ public abstract class ChessPiece {
 
     // --------- Private Helper Methods ---------
 
-    private int getRow(String position) {
+    protected int getRow(String position) {
         return '8' - position.charAt(1);
     }
 
-    private int getCol(String position) {
+    protected int getCol(String position) {
         return position.charAt(0) - 'a';
     }
 
     /*
         Private method to check validity of chess board position.
      */
-    private boolean isValidPosition(String position) {
+    protected boolean isOnBoard(String position) {
         if (position.length() != 2) {
             return false;
         }
@@ -110,10 +110,14 @@ public abstract class ChessPiece {
         return (col >= 'a' && col <= 'h' && row >= '1' && row <= '8');
     }
 
+    protected boolean isOnBoard(int row, int col) {
+        return (row >= 0 && row <= 7 && col >= 0 && col <= 7);
+    }
+
     /*
         Private method to convert 2D-array indices to a chessboard position (i.e. "e6").
      */
-    private String indicesToPosition(int row, int col) throws IllegalPositionException {
+    protected String indicesToPosition(int row, int col) throws IllegalPositionException {
         if (row >= 0 && row <= 7 && col >= 0 && col <= 7) {
             return String.format("%c%c", 'a' + col, '8' - row);
         }

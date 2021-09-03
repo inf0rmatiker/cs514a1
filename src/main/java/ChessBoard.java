@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class ChessBoard {
 
     private ChessPiece[][] board;
@@ -83,11 +85,17 @@ public class ChessBoard {
                 throw new IllegalMoveException();
             }
 
-
+            ArrayList<String> legalMoves = fromPiece.legalMoves();
+            if (legalMoves.contains(toPosition)) {
+                if (!placePiece(fromPiece, toPosition)) {
+                    throw new IllegalMoveException();
+                }
+            } else {
+                throw new IllegalMoveException();
+            }
         } catch (IllegalPositionException e) {
             throw new IllegalMoveException();
         }
-
     }
 
     /*

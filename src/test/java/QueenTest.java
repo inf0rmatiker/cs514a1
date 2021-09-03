@@ -89,10 +89,15 @@ public class QueenTest {
     }
 
     @Test
-    public void testLegalMoves() {
-        Queen queen = new Queen(testChessBoard, ChessPiece.Color.BLACK);
-        int expected = 0;
-        int actual = queen.legalMoves().size();
-        assertEquals(expected, actual);
+    public void testLegalMovesDefaultPosition() {
+        ChessBoard chessBoard = new ChessBoard();
+        Queen queen = new Queen(chessBoard, ChessPiece.Color.BLACK);
+        assertTrue(chessBoard.placePiece(queen, "d8"));
+        assertTrue(queen.legalMoves().isEmpty());
+
+        chessBoard = new ChessBoard();
+        queen = new Queen(chessBoard, ChessPiece.Color.WHITE);
+        assertTrue(chessBoard.placePiece(queen, "d1"));
+        assertTrue(queen.legalMoves().isEmpty());
     }
 }

@@ -88,10 +88,25 @@ public class KnightTest {
     }
 
     @Test
-    public void testLegalMoves() {
-        Knight knight = new Knight(testChessBoard, ChessPiece.Color.BLACK);
-        int expected = 0;
-        int actual = knight.legalMoves().size();
-        assertEquals(expected, actual);
+    public void testLegalMovesDefaultPosition() {
+        ChessBoard chessBoard = new ChessBoard();
+        Knight knight = new Knight(chessBoard, ChessPiece.Color.BLACK);
+        assertTrue(chessBoard.placePiece(knight, "b8"));
+        assertTrue(knight.legalMoves().isEmpty());
+
+        chessBoard = new ChessBoard();
+        knight = new Knight(chessBoard, ChessPiece.Color.BLACK);
+        assertTrue(chessBoard.placePiece(knight, "g8"));
+        assertTrue(knight.legalMoves().isEmpty());
+
+        chessBoard = new ChessBoard();
+        knight = new Knight(chessBoard, ChessPiece.Color.WHITE);
+        assertTrue(chessBoard.placePiece(knight, "b1"));
+        assertTrue(knight.legalMoves().isEmpty());
+
+        chessBoard = new ChessBoard();
+        knight = new Knight(chessBoard, ChessPiece.Color.WHITE);
+        assertTrue(chessBoard.placePiece(knight, "g1"));
+        assertTrue(knight.legalMoves().isEmpty());
     }
 }
